@@ -7,9 +7,6 @@ export function NavBar() {
         <Link className="text-lg font-medium text-gray-300 hover:underline underline-offset-4" to={"/"}>
           Flashcards
         </Link>
-        <Link className="text-lg font-medium text-gray-300 hover:underline underline-offset-4" to={"/"}>
-          Quizzes
-        </Link>
       </nav>
     </header>
   )
