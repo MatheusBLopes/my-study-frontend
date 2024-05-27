@@ -12,7 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { redirect, useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const FormSchema = z.object({
   side_a: z.string().min(2, {
@@ -43,9 +43,10 @@ export function CreateCard() {
       };
   
     axios.post(`http://localhost:8000/cards/`, payload)
-        .then(response => {
+        .then(() => {
             navigate(`/deck/${deckId}`)
-        })
+        }
+        )
         .catch(error => {
             console.error('Error creating card:', error);
         })
