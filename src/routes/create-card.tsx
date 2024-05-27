@@ -11,7 +11,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { useParams, useNavigate } from 'react-router-dom';
 
 const FormSchema = z.object({
@@ -53,37 +53,43 @@ export function CreateCard() {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
-        <FormField
-          control={form.control}
-          name="side_a"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Side A" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+    <div className="min-h-screen">
+      <main className="flex-col mx-auto">
+      <div className="container mx-auto px-4 md:px-6 py-12">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="side_a"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Side A</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="Side A" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-        <FormField
-          control={form.control}
-          name="side_b"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Input placeholder="Side B" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+            <FormField
+              control={form.control}
+              name="side_b"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Side B</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="Side B" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit">Submit</Button>
+          </form>
+        </Form>
+      </div>
+      </main>
+    </div>
   )
 }

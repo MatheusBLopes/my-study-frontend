@@ -1,8 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { CardSubtitle } from '@/components/card-subtitle';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import {
   Carousel,
@@ -16,7 +14,6 @@ import {
 import {
   Card,
   CardContent,
-  CardFooter,
 } from "../components/ui/card"
 
 
@@ -128,18 +125,18 @@ export function DeckDetail() {
             {deck.cards.map((card) => (
               <CarouselItem key={card.id} className="min-w-full flex justify-center">
 
-                <Card className="p-6 bg-gray-900 rounded-lg shadow-lg w-[500px] ">
-                  <FontAwesomeIcon icon={faTrash} className="cursor-pointer" onClick={() => { handleDeleteCard(card.id) }} />
-                  <CardContent className="">
-                    <h3 className="text-xl mb-2">{card.side_a}</h3>
-                    <Button variant="outline" onClick={() => toggleShowAnswer(card.id)}>
-                      {showAnswerMap[card.id] ? "Hide Answer" : "Show Answer"}
-                    </Button>
+                <Card className="flex flex-col justify-between items-center p-6 bg-gray-900 rounded-lg w-[500px] h-[500px]">
+                  <div className="flex justify-center">
+                    <Button variant="outline" onClick={() => { handleDeleteCard(card.id) }}>X</Button>
+                  </div>
+
+                  <CardContent >
+                    <h3 className="text-xl self-auto">{card.side_a}</h3>
                   </CardContent>
                   {showAnswerMap[card.id] && (
-                    <CardFooter className="flex-col">
+                    <>
                       <h3 className="text-xl mb-2">{card.side_b}</h3>
-                      <div className="flex justify-between">
+                      <div className="">
                         <Button variant="outline" onClick={() => { updateReview(card.id, 5) }}>5</Button>
                         <Button variant="outline" onClick={() => { updateReview(card.id, 4) }}>4</Button>
                         <Button variant="outline" onClick={() => { updateReview(card.id, 3) }}>3</Button>
@@ -147,8 +144,13 @@ export function DeckDetail() {
                         <Button variant="outline" onClick={() => { updateReview(card.id, 1) }}>1</Button>
                         <Button variant="outline" onClick={() => { updateReview(card.id, 0) }}>0</Button>
                       </div>
-                    </CardFooter>
+                    
+                    </>
+
                   )}
+                  <Button variant="outline" className="" onClick={() => toggleShowAnswer(card.id)}>
+                      {showAnswerMap[card.id] ? "Hide Answer" : "Show Answer"}
+                  </Button>
                 </Card>
               </CarouselItem>
             ))}

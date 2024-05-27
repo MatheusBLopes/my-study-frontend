@@ -48,16 +48,16 @@ export function DeckComponent({ deck, onDelete }: { deck: Deck, onDelete: (id: n
 
     
     return (
-        <div className="bg-gray-900 rounded-lg shadow-lg overflow-hidden">
-            <FontAwesomeIcon icon={faTrash} className="cursor-pointer" onClick={() => { onDelete(deck.id) }} />
-            <Link to={`/deck/${deck.id}`} >
-                <div className="p-6">
+        <div className="bg-gray-900 rounded-lg">
+            <div className="p-6 grid grid-cols-2 place-items-start">
+                <Link to={`/deck/${deck.id}`} >
                     <h3 className="text-xl font-semibold mb-2">{deck.name}</h3>
-                    <p className="text-gray-400 mb-4">{deck.description}</p>
-                    <p className="text-gray-400 mb-4">Total cards: {deck.cards.length}</p>
-                    <p className="text-gray-400 mb-4">Cards for today: {countCardsToReview(deck)}</p>
-                </div>
-            </Link>
+                </Link>
+                <FontAwesomeIcon icon={faTrash} className="cursor-pointer self-center place-self-end" onClick={() => { onDelete(deck.id) }} />
+                <p className="text-gray-400 mb-4 col-span-2">{deck.description}</p>
+                <p className="text-gray-400 mb-4 col-span-2">Total cards: {deck.cards.length}</p>
+                <p className="text-gray-400 mb-4 col-span-2">Cards for today: {countCardsToReview(deck)}</p>
+            </div>
         </div>
     );
 }

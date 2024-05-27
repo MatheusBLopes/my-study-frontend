@@ -67,7 +67,7 @@ export function Root() {
   }
 
   return (
-    <div className="bg-gray-950 text-gray-50 min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col">
 
       <main className="flex-col justify-around mx-auto px-4 md:px-6 py-12">
         <Link to={`/create-deck`}>Create Deck</Link>
