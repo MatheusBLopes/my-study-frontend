@@ -18,6 +18,7 @@ import {
 
 
 import { Button } from "../components/ui/button"
+import Loader from '@/components/loader';
 
 interface Review {
   quality: number;
@@ -83,8 +84,9 @@ export function DeckDetail() {
   }, [id]);
 
   if (!deck) {
-    return <div className="bg-gray-950 text-gray-50 min-h-screen flex flex-col">Loading...</div>;
+    return <Loader />
   }
+
 
   const handleDeleteCard = (id: number) => {
     if (window.confirm('Are you sure you want to delete this card?')) {

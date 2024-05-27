@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { DeckComponent } from "../components/deck-component"
+import Loader from '@/components/loader';
 
 interface Review {
   quality: number;
@@ -48,7 +49,7 @@ export function Root() {
   }, []);
 
   if (!decks) {
-    return <div className="bg-gray-950 text-gray-50 min-h-screen flex flex-col">Loading...</div>;
+    return <Loader />
   }
 
 
