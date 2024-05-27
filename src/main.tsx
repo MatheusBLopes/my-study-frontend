@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { Root } from './routes/root';
 import { DeckDetail } from './routes/deckDetail';
 import { CreateDeck } from './routes/create-deck';
+import { CreateCard } from './routes/create-card';
 import Layout from './components/layout'; // Ensure this path is correct
 import './globals.css';
 
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: '/create-deck',
         element: <CreateDeck />
+      },
+      {
+        path: '/deck/:deckId/create-card',
+        element: <CreateCard />
       }
     ],
   },

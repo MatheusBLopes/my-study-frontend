@@ -127,6 +127,7 @@ export function DeckDetail() {
         <div className="container mx-auto px-4 md:px-6 py-12">
             <h1 className="text-3xl font-bold mb-4">{deck.name}</h1>
             <p className="text-gray-400 mb-6">{deck.description}</p>
+            <Button onClick={() => { window.location.href = `/deck/${deck.id}/create-card` }}>Create Card</Button>
         </div>
 
         
