@@ -86,6 +86,20 @@ export function DeckDetail() {
     return <div className="bg-gray-950 text-gray-50 min-h-screen flex flex-col">Loading...</div>;
   }
 
+  const handleDeleteCard = (id: number) => {
+
+    axios.delete(`http://localhost:8000/cards/${id}`)
+        .then(response => {
+          if (deck.cards) {
+            setDeck(prevDeck => prevDeck ? { ...prevDeck, cards: prevDeck.cards.filter(card => card.id !== id) } : null);
+          }
+        })
+        .catch(error => {
+            console.error('Error deleting deck:', error)
+        })
+  }
+
+
   const toggleShowAnswer = (cardId: number) => {
     setShowAnswerMap(prevState => ({
       ...prevState,
@@ -123,6 +137,7 @@ export function DeckDetail() {
               <CarouselItem key={card.id} className="min-w-full flex justify-center">
 
                     <Card className="p-6 bg-gray-900 rounded-lg shadow-lg w-[500px] ">
+                      <Button onClick={() => { handleDeleteCard(card.id) }}>Delete Card</Button>
                         <CardContent className="">
                             <h3 className="text-xl mb-2">{card.side_a}</h3>
                             <Button variant="outline" onClick={() => toggleShowAnswer(card.id)}>
@@ -131,15 +146,15 @@ export function DeckDetail() {
                         </CardContent>
                         {showAnswerMap[card.id] && (
                             <CardFooter className="flex-col">
-                            <h3 className="text-xl mb-2">{card.side_b}</h3>
-                            <div className="flex justify-between">
-                                <Button variant="outline" onClick={() => { updateReview(card.id, 5) }}>5</Button>
-                                <Button variant="outline" onClick={() => { updateReview(card.id, 4) }}>4</Button>
-                                <Button variant="outline" onClick={() => { updateReview(card.id, 3) }}>3</Button>
-                                <Button variant="outline" onClick={() => { updateReview(card.id, 2) }}>2</Button>
-                                <Button variant="outline" onClick={() => { updateReview(card.id, 1) }}>1</Button>
-                                <Button variant="outline" onClick={() => { updateReview(card.id, 0) }}>0</Button>
-                            </div>
+                              <h3 className="text-xl mb-2">{card.side_b}</h3>
+                              <div className="flex justify-between">
+                                  <Button variant="outline" onClick={() => { updateReview(card.id, 5) }}>5</Button>
+                                  <Button variant="outline" onClick={() => { updateReview(card.id, 4) }}>4</Button>
+                                  <Button variant="outline" onClick={() => { updateReview(card.id, 3) }}>3</Button>
+                                  <Button variant="outline" onClick={() => { updateReview(card.id, 2) }}>2</Button>
+                                  <Button variant="outline" onClick={() => { updateReview(card.id, 1) }}>1</Button>
+                                  <Button variant="outline" onClick={() => { updateReview(card.id, 0) }}>0</Button>
+                              </div>
                             </CardFooter>
                         )}
                     </Card>

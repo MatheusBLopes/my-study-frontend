@@ -12,6 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { redirect } from 'react-router-dom';
 
 const FormSchema = z.object({
   name: z.string().min(2, {
@@ -22,7 +23,7 @@ const FormSchema = z.object({
   })
 })
 
-export function InputForm() {
+export function CreateDeck() {
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -39,6 +40,7 @@ export function InputForm() {
   
     axios.post(`http://localhost:8000/decks/`, payload)
         .then(response => {
+            return redirect('/')
         })
         .catch(error => {
             console.error('Error creating deck:', error);

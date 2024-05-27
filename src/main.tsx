@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Root } from './routes/root';
 import { DeckDetail } from './routes/deckDetail';
+import { CreateDeck } from './routes/create-deck';
 import Layout from './components/layout'; // Ensure this path is correct
 import './globals.css';
 
@@ -20,9 +21,13 @@ const router = createBrowserRouter([
         element: <Root />,
       },
       {
-        path: 'deck/:id',
+        path: '/deck/:id',
         element: <DeckDetail />,
       },
+      {
+        path: '/create-deck',
+        element: <CreateDeck />
+      }
     ],
   },
 ]);
