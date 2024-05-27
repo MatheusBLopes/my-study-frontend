@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Button } from "../components/ui/button"
-import { DeckComponent } from "../components/deck"
+import { DeckComponent } from "../components/deck-component"
 
 interface Review {
   quality: number;
@@ -54,16 +53,17 @@ export function Root() {
 
 
   const handleDeleteDeck = (id: number) => {
-
-    axios.delete(`http://localhost:8000/decks/${id}`)
-      .then(response => {
-        if (decks) {
-          setDecks(decks.filter(deck => deck.id !== id))
-        }
-      })
-      .catch(error => {
-        console.error('Error deleting deck:', error)
-      })
+    if (window.confirm('Are you sure you want to delete this deck?')) {
+      axios.delete(`http://localhost:8000/decks/${id}`)
+        .then(() => {
+          if (decks) {
+            setDecks(decks.filter(deck => deck.id !== id))
+          }
+        })
+        .catch(error => {
+          console.error('Error deleting deck:', error)
+        })
+    }
   }
 
   return (
@@ -73,7 +73,7 @@ export function Root() {
         <Link to={`/create-deck`}>Create Deck</Link>
         <div className="container mx-auto px-4 md:px-6 py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {decks.map(deck => (
-            <DeckComponent deck={deck} onDelete={handleDeleteDeck} />
+            <DeckComponent key={deck.id} deck={deck} onDelete={handleDeleteDeck} />
           ))}
         </div>
       </main>

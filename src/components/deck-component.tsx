@@ -1,6 +1,6 @@
-import { Button } from "../components/ui/button"
 import { Link } from 'react-router-dom';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 interface Review {
     quality: number;
@@ -45,8 +45,11 @@ function countCardsToReview(deck: Deck): number {
 
 
 export function DeckComponent({ deck, onDelete }: { deck: Deck, onDelete: (id: number) => void }) {
+
+    
     return (
-        <div key={deck.id} className="bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+        <div className="bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+            <FontAwesomeIcon icon={faTrash} className="cursor-pointer" onClick={() => { onDelete(deck.id) }} />
             <Link to={`/deck/${deck.id}`} >
                 <div className="p-6">
                     <h3 className="text-xl font-semibold mb-2">{deck.name}</h3>
@@ -55,7 +58,6 @@ export function DeckComponent({ deck, onDelete }: { deck: Deck, onDelete: (id: n
                     <p className="text-gray-400 mb-4">Cards for today: {countCardsToReview(deck)}</p>
                 </div>
             </Link>
-            <Button onClick={() => onDelete(deck.id)}>Delete Deck</Button>
         </div>
     );
 }

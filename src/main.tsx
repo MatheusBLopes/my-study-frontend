@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Root } from './routes/root';
-import { DeckDetail } from './routes/deckDetail';
+import { DeckDetail } from './routes/deck';
 import { CreateDeck } from './routes/create-deck';
 import { CreateCard } from './routes/create-card';
 import Layout from './components/layout'; // Ensure this path is correct
