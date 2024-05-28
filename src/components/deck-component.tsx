@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 interface Review {
     quality: number;
@@ -53,7 +54,12 @@ export function DeckComponent({ deck, onDelete }: { deck: Deck, onDelete: (id: n
                 <Link to={`/deck/${deck.id}`} >
                     <h3 className="text-xl font-semibold mb-2">{deck.name}</h3>
                 </Link>
-                <FontAwesomeIcon icon={faTrash} className="cursor-pointer self-center place-self-end" onClick={() => { onDelete(deck.id) }} />
+                <div className="cursor-pointer self-center place-self-end">
+                    <Link to={`/deck-details/${deck.id}`} className="mr-4">
+                        <FontAwesomeIcon icon={faInfoCircle} />
+                    </Link>
+                    <FontAwesomeIcon icon={faTrash} className="cursor-pointer" onClick={() => { onDelete(deck.id) }} />
+                </div>
                 <p className="text-gray-400 mb-4 col-span-2">{deck.description}</p>
                 <p className="text-gray-400 mb-4 col-span-2">Total cards: {deck.cards.length}</p>
                 <p className="text-gray-400 mb-4 col-span-2">Cards for today: {countCardsToReview(deck)}</p>
