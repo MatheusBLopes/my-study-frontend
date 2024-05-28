@@ -35,7 +35,7 @@ function countCardsToReview(deck: Deck): number {
     let count = 0;
 
     deck.cards.forEach((card) => {
-        if (card.next_review_date === currentDate) {
+        if (card.next_review_date === currentDate || card.next_review_date === null) {
             count++;
         }
     });
