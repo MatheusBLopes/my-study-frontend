@@ -50,6 +50,7 @@ interface Deck {
 export function DeckDetail() {
   const { id } = useParams<{ id: string }>();
   const [deck, setDeck] = useState<Deck | null>(null);
+  const [cards, setCards] = useState<CardInterface[] | null>(null);
   const [showAnswerMap, setShowAnswerMap] = useState<{ [key: number]: boolean }>({});
 
   const updateReview = (id: number, quality: number) => {
@@ -70,20 +71,25 @@ export function DeckDetail() {
   }
 
   useEffect(() => {
-    const fetchDeck = async () => {
+    const fetchDeckAndCards = async () => {
       try {
-        const response = await axios.get<Deck>(`http://localhost:8000/decks/${id}`);
-        setDeck(response.data);
+        const decks = await axios.get<Deck>(`http://localhost:8000/decks/${id}`);
+        setDeck(decks.data);
+        
+        const currentDate = new Date().toISOString().slice(0, 10); // Format: YYYY-MM-DD
+        const cards = await axios.get<CardInterface[]>(`http://localhost:8000/cards/?date=${currentDate}`);
+
+        setCards(cards.data);
       } catch (error) {
 
         console.error('Error fetching deck:', error);
       }
     };
 
-    fetchDeck();
+    fetchDeckAndCards();
   }, [id]);
 
-  if (!deck) {
+  if (!deck || !cards) {
     return <Loader />
   }
 
@@ -124,7 +130,7 @@ export function DeckDetail() {
         <Carousel className="relative">
           <CarouselPrevious />
           <CarouselContent className="flex">
-            {deck.cards.map((card) => (
+            {cards?.map((card) => (
               <CarouselItem key={card.id} className="min-w-full flex justify-center">
 
                 <Card className="flex flex-col justify-between items-center p-6 bg-gray-900 rounded-lg w-[500px] h-[500px]">
