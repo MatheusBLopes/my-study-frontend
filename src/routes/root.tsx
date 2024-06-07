@@ -38,7 +38,7 @@ export function Root() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<Deck[]>(`${import.meta.env.REACT_APP_API_URL}/decks/`);
+        const response = await axios.get<Deck[]>(`${import.meta.env.VITE_API_URL}/decks/`);
         setDecks(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -55,7 +55,7 @@ export function Root() {
 
   const handleDeleteDeck = (id: number) => {
     if (window.confirm('Are you sure you want to delete this deck?')) {
-      axios.delete(`${import.meta.env.REACT_APP_API_URL}/decks/${id}`)
+      axios.delete(`${import.meta.env.VITE_API_URL}/decks/${id}`)
         .then(() => {
           if (decks) {
             setDecks(decks.filter(deck => deck.id !== id))

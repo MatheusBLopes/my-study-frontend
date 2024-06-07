@@ -39,7 +39,7 @@ export function CreateDeck() {
       "description": data.description
     };
 
-    axios.post(`${import.meta.env.REACT_APP_API_URL}/decks/`, payload)
+    axios.post(`${import.meta.env.VITE_API_URL}/decks/`, payload)
       .then(() => {
         navigate('/')
       })

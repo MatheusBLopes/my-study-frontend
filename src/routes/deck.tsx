@@ -60,7 +60,7 @@ export function Deck() {
       "quality": quality
     };
 
-    axios.put(`${import.meta.env.REACT_APP_API_URL}/cards/card-review/${id}`, data)
+    axios.put(`${import.meta.env.VITE_API_URL}/cards/card-review/${id}`, data)
       .then(() => {
       })
       .catch(error => {
@@ -74,7 +74,7 @@ export function Deck() {
   useEffect(() => {
     const fetchDeckAndCards = async () => {
       try {
-        const response = await axios.get<Deck>(`${import.meta.env.REACT_APP_API_URL}/decks/${id}`);
+        const response = await axios.get<Deck>(`${import.meta.env.VITE_API_URL}/decks/${id}`);
         
         const currentDate = new Date().toISOString().slice(0, 10); // Format: YYYY-MM-DD
         const filteredCards = response.data.cards.filter(card => card.next_review_date === null || card.next_review_date === currentDate || card.next_review_date < currentDate) ?? [];
@@ -97,7 +97,7 @@ export function Deck() {
 
   const handleDeleteCard = (id: number) => {
     if (window.confirm('Are you sure you want to delete this card?')) {
-      axios.delete(`${import.meta.env.REACT_APP_API_URL}/cards/${id}`)
+      axios.delete(`${import.meta.env.VITE_API_URL}/cards/${id}`)
         .then(() => {
           if (deck.cards) {
             setDeck(prevDeck => prevDeck ? { ...prevDeck, cards: prevDeck.cards.filter(card => card.id !== id) } : null);

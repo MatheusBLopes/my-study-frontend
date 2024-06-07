@@ -42,7 +42,7 @@ export function CreateCard() {
         "deck_id": deckId
       };
   
-    axios.post(`${import.meta.env.REACT_APP_API_URL}/cards/`, payload)
+    axios.post(`${import.meta.env.VITE_API_URL}/cards/`, payload)
         .then(() => {
             navigate(`/deck/${deckId}`)
         }
