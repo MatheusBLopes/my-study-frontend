@@ -58,7 +58,7 @@ export function Deck() {
       "quality": quality
     };
 
-    axios.put(`http://localhost:8000/cards/card-review/${id}`, data)
+    axios.put(`http://192.168.100.134:9000/cards/card-review/${id}`, data)
       .then(() => {
       })
       .catch(error => {
@@ -72,10 +72,10 @@ export function Deck() {
   useEffect(() => {
     const fetchDeckAndCards = async () => {
       try {
-        const response = await axios.get<Deck>(`http://localhost:8000/decks/${id}`);
+        const response = await axios.get<Deck>(`http://192.168.100.134:9000/decks/${id}`);
         
         const currentDate = new Date().toISOString().slice(0, 10); // Format: YYYY-MM-DD
-        const filteredCards = response.data.cards.filter(card => card.next_review_date === null || card.next_review_date === currentDate) ?? [];
+        const filteredCards = response.data.cards.filter(card => card.next_review_date === null || card.next_review_date === currentDate || card.next_review_date < currentDate) ?? [];
         response.data.cards = filteredCards
 
         setDeck(response.data)
@@ -95,7 +95,7 @@ export function Deck() {
 
   const handleDeleteCard = (id: number) => {
     if (window.confirm('Are you sure you want to delete this card?')) {
-      axios.delete(`http://localhost:8000/cards/${id}`)
+      axios.delete(`http://192.168.100.134:9000/cards/${id}`)
         .then(() => {
           if (deck.cards) {
             setDeck(prevDeck => prevDeck ? { ...prevDeck, cards: prevDeck.cards.filter(card => card.id !== id) } : null);
