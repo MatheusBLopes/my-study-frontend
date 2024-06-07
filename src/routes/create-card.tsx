@@ -42,7 +42,7 @@ export function CreateCard() {
         "deck_id": deckId
       };
   
-    axios.post(`http://192.168.100.134:9000/cards/`, payload)
+    axios.post(`${process.env.REACT_APP_API_URL}/cards/`, payload)
         .then(() => {
             navigate(`/deck/${deckId}`)
         }

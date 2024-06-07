@@ -39,7 +39,7 @@ export function CreateDeck() {
       "description": data.description
     };
 
-    axios.post(`http://192.168.100.134:9000/decks/`, payload)
+    axios.post(`${process.env.REACT_APP_API_URL}/decks/`, payload)
       .then(() => {
         navigate('/')
       })
