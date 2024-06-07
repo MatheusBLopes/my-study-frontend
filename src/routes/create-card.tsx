@@ -42,7 +42,7 @@ export function CreateCard() {
         "deck_id": deckId
       };
   
-    axios.post(`http://localhost:8000/cards/`, payload)
+    axios.post(`http://localhost:9000/cards/`, payload)
         .then(() => {
             navigate(`/deck/${deckId}`)
         }

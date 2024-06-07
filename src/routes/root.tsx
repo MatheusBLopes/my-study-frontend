@@ -38,7 +38,7 @@ export function Root() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<Deck[]>('http://localhost:8000/decks/');
+        const response = await axios.get<Deck[]>('http://localhost:9000/decks/');
         setDecks(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -55,7 +55,7 @@ export function Root() {
 
   const handleDeleteDeck = (id: number) => {
     if (window.confirm('Are you sure you want to delete this deck?')) {
-      axios.delete(`http://localhost:8000/decks/${id}`)
+      axios.delete(`http://localhost:9000/decks/${id}`)
         .then(() => {
           if (decks) {
             setDecks(decks.filter(deck => deck.id !== id))

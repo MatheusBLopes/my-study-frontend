@@ -2,6 +2,8 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { CardSubtitle } from '@/components/card-subtitle';
 import axios from 'axios';
+import { ScrollArea } from "@/components/ui/scroll-area"
+
 import {
   Carousel,
   CarouselContent,
@@ -58,7 +60,7 @@ export function Deck() {
       "quality": quality
     };
 
-    axios.put(`http://localhost:8000/cards/card-review/${id}`, data)
+    axios.put(`http://localhost:9000/cards/card-review/${id}`, data)
       .then(() => {
       })
       .catch(error => {
@@ -72,10 +74,10 @@ export function Deck() {
   useEffect(() => {
     const fetchDeckAndCards = async () => {
       try {
-        const response = await axios.get<Deck>(`http://localhost:8000/decks/${id}`);
+        const response = await axios.get<Deck>(`http://localhost:9000/decks/${id}`);
         
         const currentDate = new Date().toISOString().slice(0, 10); // Format: YYYY-MM-DD
-        const filteredCards = response.data.cards.filter(card => card.next_review_date === null || card.next_review_date === currentDate) ?? [];
+        const filteredCards = response.data.cards.filter(card => card.next_review_date === null || card.next_review_date === currentDate || card.next_review_date < currentDate) ?? [];
         response.data.cards = filteredCards
 
         setDeck(response.data)
@@ -95,7 +97,7 @@ export function Deck() {
 
   const handleDeleteCard = (id: number) => {
     if (window.confirm('Are you sure you want to delete this card?')) {
-      axios.delete(`http://localhost:8000/cards/${id}`)
+      axios.delete(`http://localhost:9000/cards/${id}`)
         .then(() => {
           if (deck.cards) {
             setDeck(prevDeck => prevDeck ? { ...prevDeck, cards: prevDeck.cards.filter(card => card.id !== id) } : null);
@@ -130,20 +132,24 @@ export function Deck() {
           <CarouselPrevious />
           <CarouselContent className="flex">
             {deck.cards.map((card) => (
-              <CarouselItem key={card.id} className="min-w-full flex justify-center">
+              <CarouselItem key={card.id} className="min-w-full flex justify-center md:basis-1/2 lg:basis-1/3">
 
-                <Card className="flex flex-col justify-between items-center p-6 bg-gray-900 rounded-lg w-[500px] h-[500px]">
+                <Card className="flex flex-col justify-between items-center p-6 bg-gray-900 rounded-lg w-4/5">
                   <div className="flex justify-center">
                     <Button variant="outline" onClick={() => { handleDeleteCard(card.id) }}>X</Button>
                   </div>
 
-                  <CardContent >
-                    <h3 className="text-xl self-auto">{card.side_a}</h3>
-                  </CardContent>
+                    <ScrollArea className="h-2/5 w-4/5 rounded-md border p-4 my-4">
+                      <CardContent className="">
+                          <p className="">{card.side_a}</p>
+                      </CardContent>
+                    </ScrollArea>
                   {showAnswerMap[card.id] && (
                     <>
-                      <h3 className="text-xl mb-2">{card.side_b}</h3>
-                      <div className="">
+                      <ScrollArea className="h-2/5 w-4/5 rounded-md border p-4 mb-4">
+                        <p className="">{card.side_b}</p>
+                      </ScrollArea>
+                      <div className="mb-4">
                         <Button variant="outline" onClick={() => { updateReview(card.id, 5) }}>5</Button>
                         <Button variant="outline" onClick={() => { updateReview(card.id, 4) }}>4</Button>
                         <Button variant="outline" onClick={() => { updateReview(card.id, 3) }}>3</Button>

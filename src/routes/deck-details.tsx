@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Button } from "../components/ui/button"
 import Loader from '@/components/loader';
 import axios from 'axios';
+import { Separator } from "@/components/ui/separator"
 
 interface Review {
   quality: number;
@@ -38,7 +39,7 @@ export function DeckDetails() {
   useEffect(() => {
     const fetchDeckAndCards = async () => {
       try {
-        const decks = await axios.get<Deck>(`http://localhost:8000/decks/${id}`);
+        const decks = await axios.get<Deck>(`http://localhost:9000/decks/${id}`);
         setDeck(decks.data);
       } catch (error) {
 
@@ -56,7 +57,7 @@ export function DeckDetails() {
 
   const handleDeleteCard = (id: number) => {
     if (window.confirm('Are you sure you want to delete this card?')) {
-      axios.delete(`http://localhost:8000/cards/${id}`)
+      axios.delete(`http://localhost:9000/cards/${id}`)
         .then(() => {
           if (deck.cards) {
             setDeck(prevDeck => prevDeck ? { ...prevDeck, cards: prevDeck.cards.filter(card => card.id !== id) } : null);
@@ -86,13 +87,14 @@ export function DeckDetails() {
                         <label className="text-gray-400 mb-2">Side B</label>
                         <h3 className="text-xl mb-2">{card.side_b}</h3>
 
+                        <Separator />
                         <label className="text-gray-400 mb-2">Creation Date</label>
                         <h3 className="text-xl mb-2">{card.created_at}</h3>
 
                         <label className="text-gray-400 mb-2">Next Review Date</label>
                         <h3 className="text-xl mb-2">{card.next_review_date == null ? "Card not yet reviewed" : card.next_review_date}</h3>
 
-                        
+                        <Separator />
                         {card.reviews.length > 0 && card.reviews.slice(-3).map((review, index) => (
                             <div key={index}>
                                 <label className="text-gray-400 mb-2">Last 3 Reviews</label>
@@ -112,6 +114,7 @@ export function DeckDetails() {
                                     <label className="text-gray-400 mb-2">Review Date</label>
                                     <h3 className="text-xl mb-2">{review.review_date}</h3>
                                 </div>
+                                <Separator />
                             </div>
                             
                         ))}
