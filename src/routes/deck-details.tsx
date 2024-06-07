@@ -39,7 +39,7 @@ export function DeckDetails() {
   useEffect(() => {
     const fetchDeckAndCards = async () => {
       try {
-        const decks = await axios.get<Deck>(`${process.env.REACT_APP_API_URL}/decks/${id}`);
+        const decks = await axios.get<Deck>(`${import.meta.env.REACT_APP_API_URL}/decks/${id}`);
         setDeck(decks.data);
       } catch (error) {
 
@@ -57,7 +57,7 @@ export function DeckDetails() {
 
   const handleDeleteCard = (id: number) => {
     if (window.confirm('Are you sure you want to delete this card?')) {
-      axios.delete(`${process.env.REACT_APP_API_URL}/cards/${id}`)
+      axios.delete(`${import.meta.env.REACT_APP_API_URL}/cards/${id}`)
         .then(() => {
           if (deck.cards) {
             setDeck(prevDeck => prevDeck ? { ...prevDeck, cards: prevDeck.cards.filter(card => card.id !== id) } : null);
